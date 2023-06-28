@@ -2,6 +2,11 @@ import * as React from "react";
 import { useState, useContext } from "react";
 import FunctionContext from "../../components/GlobalFunctions/FunctionContext";
 
+//IMPORT HOOKS
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+//IMPORT MUI
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -11,69 +16,60 @@ import TextField from "@mui/material/TextField";
 import VideoCallRoundedIcon from "@mui/icons-material/VideoCallRounded";
 import { styled } from "@mui/system";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "80%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-const MyButton = styled(Button)({
-  backgroundColor: "#fa2828",
-  "&:hover": {
-    backgroundColor: "#ff0000",
-  },
-});
-
 export default function Create() {
   const { createNewMovie } = useContext(FunctionContext);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const MyTypography = styled(Typography)({
-    color: "black",
+  //KHAI BÁO INITIAL VALUES
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      thumb_url: "",
+      poster_url: "",
+      year: 0,
+      status: true,
+      content: "",
+      category: "",
+      country: "",
+      time: "",
+      link_embed: "",
+    },
+
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+      thumb_url: Yup.string().required("Required."),
+      poster_url: Yup.string().required("Required."),
+      year: Yup.number()
+        .required()
+        .positive()
+        .integer()
+        .typeError("Please enter a valid number"),
+      content: Yup.string()
+        .required("Required.")
+        .min(10, "Must be 10 characters or more"),
+      category: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+      country: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+      time: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+      link_embed: Yup.string()
+        .required("Required.")
+        .min(2, "Must be 2 characters or more"),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      createNewMovie(values);
+      resetForm({ values: { ...formik.initialValues } });
+      handleClose();
+    },
   });
-
-  const Item = styled(TextField)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    padding: theme.spacing(1),
-    textAlign: "center",
-  }));
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const movieName = data.get("name");
-    const thumb_url = data.get("thumb_url");
-    const poster_url = data.get("poster_url");
-    const year = data.get("year");
-    const movieStatus = true;
-    const content = data.get("content");
-    const category = data.get("category");
-    const country = data.get("country");
-    const time = data.get("time");
-    const link_embed = data.get("link_embed");
-    createNewMovie(
-      movieName,
-      thumb_url,
-      poster_url,
-      year,
-      movieStatus,
-      content,
-      category,
-      country,
-      time,
-      link_embed
-    );
-
-    handleClose();
-  };
 
   return (
     <div>
@@ -87,7 +83,7 @@ export default function Create() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <Box sx={style}>
             <MyTypography
               gutterBottom
@@ -110,7 +106,15 @@ export default function Create() {
                     variant="standard"
                     placeholder="Name"
                     fullWidth
+                    value={formik.values.name}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   />
+                  {formik.touched.name && formik.errors.name && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.name}
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid item xs={3}>
                   <Item
@@ -120,7 +124,15 @@ export default function Create() {
                     variant="standard"
                     placeholder="Category"
                     fullWidth
+                    value={formik.values.category}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   />
+                  {formik.touched.category && formik.errors.category && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.category}
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid item xs={3}>
                   <Item
@@ -130,7 +142,15 @@ export default function Create() {
                     variant="standard"
                     placeholder="Country"
                     fullWidth
+                    value={formik.values.country}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   />
+                  {formik.touched.country && formik.errors.country && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.country}
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid item xs={3}>
                   <Item
@@ -140,7 +160,15 @@ export default function Create() {
                     variant="standard"
                     placeholder="Year"
                     fullWidth
+                    value={formik.values.year}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   />
+                  {formik.touched.year && formik.errors.year && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.year}
+                    </Typography>
+                  )}
                 </Grid>
 
                 {/* CONTENT */}
@@ -152,9 +180,17 @@ export default function Create() {
                     variant="standard"
                     placeholder="Content"
                     fullWidth
+                    value={formik.values.content}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                     multiline
                     rows={4}
                   />
+                  {formik.touched.content && formik.errors.content && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.content}
+                    </Typography>
+                  )}
                 </Grid>
 
                 {/* LINK IMAGE */}
@@ -166,9 +202,17 @@ export default function Create() {
                     variant="standard"
                     placeholder="Thumbnail"
                     fullWidth
+                    value={formik.values.thumb_url}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                     multiline
                     rows={2}
                   />
+                  {formik.touched.thumb_url && formik.errors.thumb_url && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.thumb_url}
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
                   <Item
@@ -178,9 +222,17 @@ export default function Create() {
                     variant="standard"
                     placeholder="Poster"
                     fullWidth
+                    value={formik.values.poster_url}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                     multiline
                     rows={2}
                   />
+                  {formik.touched.poster_url && formik.errors.poster_url && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.poster_url}
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
                   <Item
@@ -190,9 +242,17 @@ export default function Create() {
                     variant="standard"
                     placeholder="Movie"
                     fullWidth
+                    value={formik.values.link_embed}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                     multiline
                     rows={2}
                   />
+                  {formik.touched.link_embed && formik.errors.link_embed && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.link_embed}
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
                   <Item
@@ -202,9 +262,17 @@ export default function Create() {
                     variant="standard"
                     placeholder="Time"
                     fullWidth
+                    value={formik.values.time}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                     multiline
                     rows={2}
                   />
+                  {formik.touched.time && formik.errors.time && (
+                    <Typography variant="caption" color="red">
+                      {formik.errors?.time}
+                    </Typography>
+                  )}
                 </Grid>
 
                 <Grid item xs={12}>
@@ -226,3 +294,32 @@ export default function Create() {
     </div>
   );
 }
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const MyButton = styled(Button)({
+  backgroundColor: "#fa2828",
+  "&:hover": {
+    backgroundColor: "#ff0000",
+  },
+});
+
+const MyTypography = styled(Typography)({
+  color: "black",
+});
+
+const Item = styled(TextField)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  padding: theme.spacing(1),
+  textAlign: "center",
+}));

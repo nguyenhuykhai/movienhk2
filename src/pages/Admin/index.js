@@ -1,8 +1,11 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import FunctionContext from "../../components/GlobalFunctions/FunctionContext";
-import { DataGrid } from "@mui/x-data-grid";
 import ScrollToTop from "../../components/GlobalFunctions/ScrollToTop";
+
+//IMPORT MUI
+import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
 import BasicModal from "./DetailModal";
@@ -13,6 +16,17 @@ import { styled } from "@mui/system";
 function Admin() {
   const { reRender, updateMovieStatus } = useContext(FunctionContext);
   const [rows, setRows] = useState([]);
+  const navigate = useNavigate();
+
+  //CHECK ISADMIN: IF NOT ISADMIN, THE APPICATION WILL RETURN TO HOMEPAGE
+  const handleCheckAccountRole = () => {
+    const accountRole = localStorage.getItem("isAdmin"); // Replace with your actual function to retrieve the account role
+    // Navigate based on the account role
+    if (!accountRole) {
+      navigate("/");
+    }
+  };
+  handleCheckAccountRole();
 
   // UPDATE ROWS TWO WAY BINDING
   const updateRows = (id, newStatus) => {
@@ -35,13 +49,6 @@ function Admin() {
     };
     fetchData();
   }, [reRender]);
-
-  const MyButton = styled(Button)({
-    backgroundColor: "#fa2828",
-    "&:hover": {
-      backgroundColor: "#ff0000",
-    },
-  });
 
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
@@ -82,33 +89,43 @@ function Admin() {
   return (
     <>
       <ScrollToTop />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "1rem",
-        }}
-      >
-        <h1>
+      {localStorage.getItem("isAdmin") && (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "1rem",
+            }}
+          >
+            <h1></h1>
+            <Create />
+          </div>
 
-        </h1>
-        <Create />
-      </div>
-
-      <DataGrid
-        autoHeight
-        sx={{ backgroundColor: "white" }}
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 7 },
-          },
-        }}
-        pageSizeOptions={[7, 10]}
-      />
+          <DataGrid
+            autoHeight
+            sx={{ backgroundColor: "white" }}
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 7 },
+              },
+            }}
+            pageSizeOptions={[7, 10]}
+          />
+          
+        </>
+      )}
     </>
   );
 }
+
+const MyButton = styled(Button)({
+  backgroundColor: "#fa2828",
+  "&:hover": {
+    backgroundColor: "#ff0000",
+  },
+});
 
 export default Admin;

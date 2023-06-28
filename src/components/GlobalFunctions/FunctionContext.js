@@ -1,50 +1,25 @@
 import { createContext, useState, useEffect } from "react";
 
+import Alert from "@mui/material/Alert";
+import Slide from "@mui/material/Slide";
+import { styled } from "@mui/system";
+
 const FunctionContext = createContext();
 
 export const FunctionProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
   const [reRender, setReRender] = useState(false);
+  const [alert, setAlert] = useState({});
+  const [open, setOpen] = useState(false);
 
-  // CREATE MOVIE JSON
-  const createMovie = async ({
-    id,
-    name,
-    thumb_url,
-    poster_url,
-    year,
-    status,
-    content,
-    category,
-    country,
-    time,
-    link_embed,
-  }) => {
-    const response = await fetch(
-      "https://649152be2f2c7ee6c2c804cb.mockapi.io/movienhk/v1/movie/",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          name,
-          thumb_url,
-          poster_url,
-          year,
-          status,
-          content,
-          category,
-          country,
-          time,
-          link_embed,
-        }),
-      }
-    );
+  const handleOpen = () => {
+    setOpen(true);
+    setTimeout(() => setOpen(false), 2000);
   };
 
   // UPDATE STATUS MOVIE
   const updateMovieStatus = async (movieId, newStatus) => {
+    let type = {};
     try {
       const response = await fetch(
         `https://649152be2f2c7ee6c2c804cb.mockapi.io/movienhk/v1/movie/${movieId}`,
@@ -56,30 +31,48 @@ export const FunctionProvider = ({ children }) => {
           body: JSON.stringify({ status: newStatus }),
         }
       );
-
       if (response.ok) {
-        console.log("Movie status updated successfully!");
+        type = {
+          alert: "success",
+          message: "Movie status updated successfully!",
+        };
+        setAlert(type);
+        handleOpen();
       } else {
-        console.error("Failed to update movie status.");
+        type = {
+          alert: "error",
+          message: "Failed to update movie status.",
+        };
+        setAlert(type);
+        handleOpen();
       }
     } catch (error) {
       console.error("An error occurred while updating movie status:", error);
+      type = {
+        alert: "error",
+        message: "Failed to update movie status.",
+      };
+      setAlert(type);
+      handleOpen();
     }
   };
 
   // CREATE MOVIE
   const createNewMovie = async (
-    name,
-    thumb_url,
-    poster_url,
-    year,
-    status,
-    content,
-    category,
-    country,
-    time,
-    link_embed
+    // name,
+    // thumb_url,
+    // poster_url,
+    // year,
+    // status,
+    // content,
+    // category,
+    // country,
+    // time,
+    // link_embed
+    data
   ) => {
+    console.log("FUNCTION CREATE: ", data);
+    let type = {};
     try {
       const response = await fetch(
         "https://649152be2f2c7ee6c2c804cb.mockapi.io/movienhk/v1/movie",
@@ -90,61 +83,16 @@ export const FunctionProvider = ({ children }) => {
             // Add any additional headers as needed
           },
           body: JSON.stringify({
-            name: name,
-            thumb_url: thumb_url,
-            poster_url: poster_url,
-            year: year,
-            status: status,
-            content: content,
-            category: category,
-            country: country,
-            time: time,
-            link_embed: link_embed,
-          }),
-        }
-      )
-        .then((response) => {
-          setReRender(!reRender);
-          return response
-        })
-
-        if (response.ok) {
-          console.log("Create Movie successfully!");
-        } else {
-          console.error("Failed to create movie.");
-        }
-    } catch (error) {
-      console.error("An error occurred while updating movie:", error);
-    }
-  };
-
-  // UPDATE MOVIE
-  const updateMovie = async (
-    movieId,
-    name,
-    thumb_url,
-    poster_url,
-    year,
-    content,
-    category,
-    country
-  ) => {
-    try {
-      const response = await fetch(
-        `https://649152be2f2c7ee6c2c804cb.mockapi.io/movienhk/v1/movie/${movieId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: name,
-            thumb_url: thumb_url,
-            poster_url: poster_url,
-            year: year,
-            content: content,
-            category: category,
-            country: country,
+            name: data.name,
+            thumb_url: data.thumb_url,
+            poster_url: data.poster_url,
+            year: data.year,
+            status: data.status,
+            content: data.content,
+            category: data.category,
+            country: data.country,
+            time: data.time,
+            link_embed: data.link_embed,
           }),
         }
       ).then((response) => {
@@ -153,17 +101,86 @@ export const FunctionProvider = ({ children }) => {
       });
 
       if (response.ok) {
-        console.log("Movie updated successfully!");
+        type = {
+          alert: "success",
+          message: "Create movie successfully!",
+        };
+        setAlert(type);
+        handleOpen();
       } else {
-        console.error("Failed to update movie.");
+        type = {
+          alert: "error",
+          message: "Failed to create movie.",
+        };
+        setAlert(type);
+        handleOpen();
       }
     } catch (error) {
       console.error("An error occurred while updating movie:", error);
+      type = {
+        alert: "error",
+        message: "Failed to create movie.",
+      };
+      setAlert(type);
+      handleOpen();
+    }
+  };
+
+  // UPDATE MOVIE
+  const updateMovie = async (data) => {
+    let type = {};
+    try {
+      const response = await fetch(
+        `https://649152be2f2c7ee6c2c804cb.mockapi.io/movienhk/v1/movie/${data.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: data.name,
+            thumb_url: data.thumb_url,
+            poster_url: data.poster_url,
+            year: data.year,
+            content: data.content,
+            category: data.category,
+            country: data.country,
+          }),
+        }
+      ).then((response) => {
+        setReRender(!reRender);
+        return response;
+      });
+
+      if (response.ok) {
+        type = {
+          alert: "success",
+          message: "Movie updated successfully!",
+        };
+        setAlert(type);
+        handleOpen();
+      } else {
+        type = {
+          alert: "error",
+          message: "Failed to update movie.",
+        };
+        setAlert(type);
+        handleOpen();
+      }
+    } catch (error) {
+      console.error("An error occurred while updating movie:", error);
+      type = {
+        alert: "error",
+        message: "Failed to update movie.",
+      };
+      setAlert(type);
+      handleOpen();
     }
   };
 
   // DELETE MOVIE
   const deleteMovie = async (id) => {
+    let type = {};
     try {
       const response = await fetch(
         `https://649152be2f2c7ee6c2c804cb.mockapi.io/movienhk/v1/movie/${id}`,
@@ -171,21 +188,36 @@ export const FunctionProvider = ({ children }) => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         }
-      )
-        .then((response) => {
-          setReRender(!reRender);
-          return response
-        })
+      ).then((response) => {
+        setReRender(!reRender);
+        return response;
+      });
 
-        if (response.ok) {
-          console.log("Delete Movie successfully!");
-        } else {
-          console.error("Failed to delete movie.");
-        }
+      if (response.ok) {
+        type = {
+          alert: "success",
+          message: "Delete Movie successfully!",
+        };
+        setAlert(type);
+        handleOpen();
+      } else {
+        type = {
+          alert: "error",
+          message: "Failed to delete movie.",
+        };
+        setAlert(type);
+        handleOpen();
+      }
     } catch (error) {
       console.error("An error occurred while delete movie:", error);
+      type = {
+        alert: "error",
+        message: "Failed to delete movie.",
+      };
+      setAlert(type);
+      handleOpen();
     }
   };
 
@@ -194,16 +226,26 @@ export const FunctionProvider = ({ children }) => {
       value={{
         reRender,
         movies,
-        createMovie,
+        alert,
         updateMovieStatus,
         updateMovie,
         createNewMovie,
-        deleteMovie
+        deleteMovie,
       }}
     >
+      <MyAlert direction="right" spacing={2} in={open}>
+        <Alert severity={alert.alert}>{alert.message}</Alert>
+      </MyAlert>
       {children}
     </FunctionContext.Provider>
   );
 };
+
+const MyAlert = styled(Slide)({
+  width: "50%",
+  position: "absolute",
+  top: "4.5rem",
+  zIndex: "100",
+});
 
 export default FunctionContext;
