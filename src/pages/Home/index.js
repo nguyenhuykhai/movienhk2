@@ -50,7 +50,7 @@ export default function Home() {
                         <img src='/images/home2.png' alt='' />
                         <div className='home-text'>
                             <span>Marvel Universe</span>
-                            <h1>Thor: <br></br>Love and Thunder</h1>
+                            <h1>Thor <br></br>Love and Thunder</h1>
                             <a href='' className='btn'>Book Now</a>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ export default function Home() {
                         <img src='/images/home4.png' alt='' />
                         <div className='home-text'>
                             <span>Marvel Universe</span>
-                            <h1>Avengers: <br></br>End Game</h1>
+                            <h1>Avengers <br></br>End Game</h1>
                             <a href='' className='btn'>Book Now</a>
                         </div>
                     </div>
