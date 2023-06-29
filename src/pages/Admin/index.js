@@ -9,6 +9,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
 import BasicModal from "./DetailModal";
+import Tooltip from "@mui/material/Tooltip";
 import Delete from "./DeleteModal";
 import Create from "./CreateModal";
 import { styled } from "@mui/system";
@@ -114,7 +115,6 @@ function Admin() {
             }}
             pageSizeOptions={[7, 10]}
           />
-          
         </>
       )}
     </>

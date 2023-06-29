@@ -24,85 +24,13 @@ body {
 }
 
 /* ----------------------------HEADER CSS---------------------------- */
-.header {
-    position: static;
-    width: 100%;
-    top: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1% 1%;
-    transition: 0.5s;
+.link{
+    padding-left: 3rem;
 }
 
-@media screen and (max-width: 600px) {
-    .header, .navbar {
-        display: grid;
-        grid-template-areas: auto auto auto;
-        justify-content: center;
-    }
-}
-
-
-.logo {
-    font-size: 1.1rem;
-    font-weight: 600;
-    align-items: center;
-    color: var(--bg-color);
-    display: flex;
-    column-gap: 0.05rem;
-}
-
-.logo p {
-    padding-left: 0.5rem;
-    font-size: 1rem;
-    font-weight: 500
-}
-
-.bx {
-    color: var(--main-color);
-    padding-top: 3px;
-}
-
-.navbar {
-    display: flex;
-    column-gap: 5rem;
-    align-items: center;
-}
-
-.navbar li {
-    position: relative;
-}
-
-.navbar a {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--bg-color);
-}
-
-.navbar a::after {
-    content: '';
-    width: 0;
-    height: 2px;
-    background: var(--main-color);
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    transition: 0.4s all linear;
-}
-
-.navbar a:hover::after,
-.navbar .home-active::after {
-    width: 100%;
-}
-
-#menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 10000001;
-    display: none;
+.linkDashboard{
+    text-decoration: none;
+    color: #000000DE;
 }
 
 .btn {
@@ -115,12 +43,6 @@ body {
 
 .btn:hover {
     background: #fa1216;
-}
-
-.shadow {
-    background: var(--text-color);
-    opacity: 0.8;
-    position: fixed !important;
 }
 
 /* ----------------------------HOME CSS---------------------------- */

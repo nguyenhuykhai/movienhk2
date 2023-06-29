@@ -14,6 +14,10 @@ import Modal from "@mui/material/Modal";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import VideoCallRoundedIcon from "@mui/icons-material/VideoCallRounded";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { styled } from "@mui/system";
 
 export default function Create() {
@@ -103,7 +107,7 @@ export default function Create() {
                     id="name"
                     name="name"
                     label="Name"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Name"
                     fullWidth
                     value={formik.values.name}
@@ -117,17 +121,27 @@ export default function Create() {
                   )}
                 </Grid>
                 <Grid item xs={3}>
-                  <Item
-                    id="category"
-                    name="category"
-                    label="Category"
-                    variant="standard"
-                    placeholder="Category"
-                    fullWidth
-                    value={formik.values.category}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                  />
+                  <MyFormControl fullWidth>
+                    <InputLabel>Category</InputLabel >
+                    <Select
+                      name="category"
+                      id="category"
+                      value={formik.values.category}
+                      label="Category"
+                      fullWidth
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    >
+                      <MenuItem value="Hành động">Hành động</MenuItem>
+                      <MenuItem value="Tình cảm" >Tình cảm</MenuItem>
+                      <MenuItem value="Hình sự" >Hình sự</MenuItem>
+                      <MenuItem value="Hài hước" >Hài hước</MenuItem>
+                      <MenuItem value="Chính kịch" >Chính kịch</MenuItem>
+                      <MenuItem value="Âm nhạc" >Âm nhạc</MenuItem>
+                      <MenuItem value="Bí ẩn" >Bí ẩn</MenuItem>
+                      <MenuItem value="Kinh dị" >Kinh dị</MenuItem>
+                    </Select>
+                  </MyFormControl>
                   {formik.touched.category && formik.errors.category && (
                     <Typography variant="caption" color="red">
                       {formik.errors?.category}
@@ -139,7 +153,7 @@ export default function Create() {
                     id="country"
                     name="country"
                     label="Country"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Country"
                     fullWidth
                     value={formik.values.country}
@@ -157,7 +171,7 @@ export default function Create() {
                     id="year"
                     name="year"
                     label="Year"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Year"
                     fullWidth
                     value={formik.values.year}
@@ -177,7 +191,7 @@ export default function Create() {
                     id="content"
                     name="content"
                     label="Content"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Content"
                     fullWidth
                     value={formik.values.content}
@@ -199,7 +213,7 @@ export default function Create() {
                     id="thumb_url"
                     name="thumb_url"
                     label="Thumbnail"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Thumbnail"
                     fullWidth
                     value={formik.values.thumb_url}
@@ -219,7 +233,7 @@ export default function Create() {
                     id="poster_url"
                     name="poster_url"
                     label="Poster"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Poster"
                     fullWidth
                     value={formik.values.poster_url}
@@ -239,7 +253,7 @@ export default function Create() {
                     id="link_embed"
                     name="link_embed"
                     label="Movie"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Movie"
                     fullWidth
                     value={formik.values.link_embed}
@@ -259,7 +273,7 @@ export default function Create() {
                     id="time"
                     name="time"
                     label="Time"
-                    variant="standard"
+                    variant="outlined"
                     placeholder="Time"
                     fullWidth
                     value={formik.values.time}
@@ -323,3 +337,10 @@ const Item = styled(TextField)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
 }));
+
+const MyFormControl = styled(FormControl)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  padding: theme.spacing(1)
+}));
+
+

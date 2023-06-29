@@ -59,16 +59,6 @@ export const FunctionProvider = ({ children }) => {
 
   // CREATE MOVIE
   const createNewMovie = async (
-    // name,
-    // thumb_url,
-    // poster_url,
-    // year,
-    // status,
-    // content,
-    // category,
-    // country,
-    // time,
-    // link_embed
     data
   ) => {
     console.log("FUNCTION CREATE: ", data);

@@ -1,9 +1,9 @@
-import Natigation from '../../../../pages/Natigation'
+import Natigation2 from '../../../../pages/Natigation2'
 
 function Header() {
     return (
         <>
-           <Natigation />
+           <Natigation2 />
         </>
     );
 }

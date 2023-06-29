@@ -12,8 +12,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import EditIcon from "@mui/icons-material/Edit";
+import Tooltip from '@mui/material/Tooltip';
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import { styled } from "@mui/system";
 
 export default function BasicModal(params) {
@@ -63,9 +68,11 @@ export default function BasicModal(params) {
 
   return (
     <div>
+      <Tooltip title="Update">
       <Button onClick={handleOpen} >
         <EditIcon />
       </Button>
+      </Tooltip>
       <Modal
         open={open}
         onClose={handleClose}
@@ -92,7 +99,7 @@ export default function BasicModal(params) {
                     id="name"
                     name="name"
                     label="Name"
-                    variant="standard"
+                    variant="outlined"
                     fullWidth
                     value={formik.values.name}
                     onBlur={formik.handleBlur}
@@ -105,16 +112,27 @@ export default function BasicModal(params) {
                   )}
                 </Grid>
                 <Grid item xs={3}>
-                  <Item
-                    id="category"
-                    name="category"
-                    label="Category"
-                    variant="standard"
-                    fullWidth
-                    value={formik.values.category}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                  />
+                <MyFormControl fullWidth>
+                    <InputLabel>Category</InputLabel >
+                    <Select
+                      name="category"
+                      id="category"
+                      value={formik.values.category}
+                      label="Category"
+                      fullWidth
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    >
+                      <MenuItem value="Hành động">Hành động</MenuItem>
+                      <MenuItem value="Tình cảm" >Tình cảm</MenuItem>
+                      <MenuItem value="Hình sự" >Hình sự</MenuItem>
+                      <MenuItem value="Hài hước" >Hài hước</MenuItem>
+                      <MenuItem value="Chính kịch" >Chính kịch</MenuItem>
+                      <MenuItem value="Âm nhạc" >Âm nhạc</MenuItem>
+                      <MenuItem value="Bí ẩn" >Bí ẩn</MenuItem>
+                      <MenuItem value="Kinh dị" >Kinh dị</MenuItem>
+                    </Select>
+                  </MyFormControl>
                   {formik.touched.category && formik.errors.category && (
                     <Typography variant="caption" color="red">
                       {formik.errors?.category}
@@ -126,7 +144,7 @@ export default function BasicModal(params) {
                     id="country"
                     name="country"
                     label="Country"
-                    variant="standard"
+                    variant="outlined"
                     fullWidth
                     value={formik.values.country}
                     onBlur={formik.handleBlur}
@@ -143,7 +161,7 @@ export default function BasicModal(params) {
                     id="year"
                     name="year"
                     label="Year"
-                    variant="standard"
+                    variant="outlined"
                     fullWidth
                     value={formik.values.year}
                     onBlur={formik.handleBlur}
@@ -162,7 +180,7 @@ export default function BasicModal(params) {
                     id="thumb_url"
                     name="thumb_url"
                     label="Thumbnail"
-                    variant="standard"
+                    variant="outlined"
                     fullWidth
                     multiline
                     rows={2}
@@ -181,7 +199,7 @@ export default function BasicModal(params) {
                     id="poster_url"
                     name="poster_url"
                     label="Poster"
-                    variant="standard"
+                    variant="outlined"
                     fullWidth
                     multiline
                     rows={2}
@@ -202,7 +220,7 @@ export default function BasicModal(params) {
                     id="content"
                     name="content"
                     label="Content"
-                    variant="standard"
+                    variant="outlined"
                     fullWidth
                     multiline
                     rows={4}
@@ -258,6 +276,11 @@ const MyButton = styled(Button)({
 const MyTypography = styled(Typography)({
   color: "black",
 });
+
+const MyFormControl = styled(FormControl)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  padding: theme.spacing(1)
+}));
 
 const Item = styled(TextField)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

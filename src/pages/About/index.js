@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import styles from "./About.module.scss";
 import classNames from "classnames/bind";
-import ScrollToMiddle from '../../components/GlobalFunctions/ScrollToMiddle'
+import ScrollToMiddle from "../../components/GlobalFunctions/ScrollToMiddle";
 
 const cx = classNames.bind(styles);
 export default function About() {
@@ -10,43 +10,40 @@ export default function About() {
     <section className={styles.main}>
       <ScrollToMiddle />
       <div className={styles.firstScrip}>
-        <div className={styles.headline}>
-          <h2 className={styles.title}>Welcome!</h2>
-          <p>
-              Find all the information you need about Innersloth, our games,
-              assets, and everything else.
-          </p>
-        </div>
-
         <div className={styles.press}>
           <div className={styles.pressBlock}>
             <h2 className={clsx(styles.title, styles.headline)}>
-              About Innersloth
+              Welcome to MovieNHK
             </h2>
             <p>
-              Innersloth is a small independent game studio most notable for
-              creating Among Us and The Henry Stickmin Collection. Founded by
-              Forest Willard and Marcus Bromander in 2015, they made the games
-              they wanted to and hoped people would want to play them. After
-              numerous awards, global press coverage, and millions of downloads,
-              Innersloth can now confirm at least 4 people have played their
-              games. Nice.
-            </p>
-            <p>
-              Innersloth is mainly based around Seattle, USA, but has employees
-              and partners all across the globe.
+              <strong>Giới thiệu:</strong><br></br>Điểm đến hàng đầu dành cho mọi thứ về
+              điện ảnh! MovieNHK luôn tận tâm mang đến cho bạn những cập nhật
+              mới nhất, những bài đánh giá sâu sắc và những nội dung hấp dẫn từ
+              thế giới điện ảnh. Tại MovieNHK, tôi tin vào sức mạnh của điện ảnh
+              để truyền cảm hứng, giải trí và đưa chúng ta đến những thế giới
+              mới. Mục tiêu của tôi là cung cấp một nền tảng toàn diện nơi những
+              người yêu điện ảnh có thể tụ tập để khám phá, thảo luận và ăn mừng
+              những phép màu của màn bạc. Cho dù bạn là người xem phim thường
+              xuyên, người hâm mộ nhiệt huyết hay ai đó đang tìm kiếm những gợi
+              ý, MovieNHK là nguồn thông tin uy tín dành cho mọi thứ liên quan
+              đến điện ảnh. Hãy cùng tôi trên hành trình điện ảnh này khi chúng
+              ta khám phá thế giới đa dạng và hấp dẫn của điện ảnh, từng khung
+              hình một.
             </p>
           </div>
 
           <div className={styles.pressBlock}>
-            <h2 className={clsx(styles.title, styles.headline)}>History</h2>
             <p>
-              After meeting in college, Forest Willard and Marcus Bromander
-              created Innersloth as a partnership in 2015 to release Dig2China.
-              They worked part time on several unreleased games (T_T) until
-              finally going full-time indie in late 2018 for Among Us. Marcus,
-              best known online as PuffballsUnited, is also the creator of the
-              Henry Stickmin series on Newgrounds, which started in 2008.
+              <strong>Lý do bắt đầu:</strong><br></br>MovieNHK là một dự án nhỏ của sinh
+              viên đại học FPT. Tôi rất mê phim ảnh và muốn chia sẻ niềm đam mê
+              này với cộng đồng. Mục tiêu của tôi là tạo ra một nền tảng thân
+              thiện, nơi mọi người có thể khám phá, trò chuyện và chia sẻ những
+              cảm nhận, kiến thức và trải nghiệm về điện ảnh. Với MovieNHK, tôi
+              hy vọng sẽ mang đến cho bạn những bài viết, đánh giá, thông tin
+              mới nhất và hữu ích về các bộ phim, những thông tin về các sự
+              kiện, phim trường và những câu chuyện thú vị từ thế giới điện ảnh.
+              Hãy cùng tôi khám phá và cùng nhau trải nghiệm vẻ đẹp của điện ảnh
+              qua MovieNHK - nơi tạo ra bởi những người yêu điện ảnh.
             </p>
           </div>
         </div>

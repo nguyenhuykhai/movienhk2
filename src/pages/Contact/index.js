@@ -14,25 +14,6 @@ export default function About() {
           <h1 className={clsx(styles.title)}>Contact</h1>
         </div>
 
-        <div className={clsx(styles.container)}>
-          <p className="text-center">
-          Or you can contact customer service immediately to advise you immediately.
-          </p>
-
-          <div className={clsx(styles.textCenter)}>
-            <div>
-              <a href="#" className="btn">
-                0981.211.948
-              </a>
-            </div>
-            <div>
-              <a href="#" className="btn">
-                0979.853.348
-              </a>
-            </div>
-          </div>
-        </div>
-
         <div className={clsx(styles.formInput)}>
           <div className="form-group">
             <label for="Name">
